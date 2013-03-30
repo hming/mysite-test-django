@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}查看请求头{% endblock %}
+
+{% block content %}
+{% for k,v in values%}
+{{k}}={{v}}<br />
+{% endfor%}
+{% endblock %}
