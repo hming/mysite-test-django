@@ -1,6 +1,11 @@
 {% load poll_extras %}
+{% upper %}
 <p>You searched for: <strong>{{ query }}</strong></p>
+{% endupper %}
+{% current_time "%Y-%M-%d %I:%M %p" as my_current_time %}
 
+{% current_time_short  "%Y-%M-%d %I:%M %p"  %}
+<p>The current time is {{ my_current_time }}.</p>
 {% if books %}
     <p>Found {{ books|length }} book{{ books|pluralize }}.</p>
     <ul>
@@ -11,3 +16,7 @@
 {% else %}
     <p>No books matched your search criteria.</p>
 {% endif %}
+
+
+book_snippet.html
+{% books_for_title "book001" %}
