@@ -61,3 +61,41 @@ def search(request):
 #             return HttpResponseRedirect('/contact/thanks/')
 #     return render_to_response('contact_form.html',
 #         {'errors': errors})
+
+def my_image(request):
+    image_data = open("E:\GitSpace\mysite-test-django\mysite\media\img\gis\move_vertex_on.png", "rb").read()
+    return HttpResponse(image_data, mimetype="image/png")
+
+import csv
+# Number of unruly passengers each year 1995 - 2005. In a real application
+# this would likely come from a database or some other back-end data store.
+UNRULY_PASSENGERS = [146,184,235,200,226,251,299,273,281,304,203]
+
+def unruly_passengers_csv(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=unruly.csv'
+
+    # Create the CSV writer using the HttpResponse as the "file."
+    writer = csv.writer(response)
+    writer.writerow(['Year', 'Unruly Airline Passengers'])
+    for (year, num) in zip(range(1995, 2006), UNRULY_PASSENGERS):
+        writer.writerow([year, num])
+    return response
+
+def set_color(request):
+    if "favorite_color" in request.GET:
+        # Create an HttpResponse object...
+        response = HttpResponse("Your favorite color is now %s" % request.GET["favorite_color"])
+        # ... and set a cookie on the response
+        response.set_cookie("favorite_color",
+                            request.GET["favorite_color"])
+        return response
+    else:
+        return HttpResponse("You didn't give a favorite color.")
+
+def show_color(request):
+    if "favorite_color" in request.COOKIES:
+        return HttpResponse("Your favorite color is %s" % request.COOKIES["favorite_color"])
+    else:
+        return HttpResponse("You don't have a favorite color.")
